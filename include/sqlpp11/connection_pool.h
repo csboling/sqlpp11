@@ -46,7 +46,7 @@ namespace sqlpp
 			void operator()(Connection* connection)
 			{
 				if(!connection->is_valid())
-					connection->reconnect()
+					connection->reconnect();
 			}
 			template<typename Connection>
 			void clean(Connection* connection) {}
@@ -105,7 +105,7 @@ namespace sqlpp
 
 	template <typename Connection_config,
 		typename Reconnect_policy = reconnect_policy::auto_reconnect,
-		typename Connection = typename std::enable_if<std::is_class<Connection_config::connection>::value, Connection_config::connection>::type>
+		typename Connection = typename std::enable_if<std::is_class<typename Connection_config::connection>::value, typename Connection_config::connection>::type>
 	class connection_pool
 	{
 		friend pool_connection<Connection_config, Reconnect_policy, Connection>;
@@ -180,7 +180,7 @@ namespace sqlpp
 
 	template<typename Connection_config,
 		typename Reconnect_policy = reconnect_policy::auto_reconnect,
-		typename Connection = typename std::enable_if<std::is_class<Connection_config::connection>::value,Connection_config::connection>::type>
+		typename Connection = typename std::enable_if<std::is_class<typename Connection_config::connection>::value, typename Connection_config::connection>::type>
 	connection_pool<Connection_config, Reconnect_policy, Connection> make_connection_pool(
 		const std::shared_ptr<Connection_config>& config,
 		size_t max_pool_size)
