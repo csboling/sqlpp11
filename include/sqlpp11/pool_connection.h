@@ -62,7 +62,7 @@ namespace sqlpp
 
 		Connection* operator->()
 		{
-			return &_impl;
+			return _impl.get();
 		}
 
 		pool_connection(const pool_connection&) = delete;
