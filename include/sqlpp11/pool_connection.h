@@ -43,7 +43,7 @@ namespace sqlpp
 		Connection_pool* origin;
 
 	public:
-		pool_connection(std::unique_ptr<Connection>& connection, Connection_pool* origin)
+		pool_connection(std::unique_ptr<Connection> connection, Connection_pool* origin)
 			: _impl(std::move(connection)), origin(origin) {}
 
 		~pool_connection()
@@ -51,11 +51,11 @@ namespace sqlpp
 			origin->free_connection(_impl);
 		}
 
-		template<typename... Args>
+		/* template<typename... Args>
 		auto operator()(Args&&... args) -> decltype(_impl->args(std::forward<Args>(args)...))
 		{
 			return _impl->args(std::forward<Args>(args)...);
-		}
+		} */
 
 		template <typename T>
 		auto operator()(const T& t) -> decltype(_impl->run(t))

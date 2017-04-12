@@ -162,7 +162,7 @@ namespace sqlpp
 			{
 				auto connection = std::move(free_connections.top());
 				free_connections.pop();
-				return pool_connection<Connection_config, Reconnect_policy, Connection>(connection, this);
+				return pool_connection<Connection_config, Reconnect_policy, Connection>(std::move(connection), this);
 			}
 
 			try
